@@ -1,0 +1,19 @@
+.navbar {
+    background-color: pink;
+}
+
+.navbar li {
+    list-style: none;
+    margin: auto;
+    padding: 15px;
+    display: inline;
+}
+
+#title {
+    font-size: 1.2em;
+    background-color: #B6B6B6;
+}
+
+td {
+  padding: 10px;
+}

@@ -1,0 +1,30 @@
+// Jade file to specify output of a persons list
+// Inherits from layout
+extend layout
+block navbarcontent
+    +nav_item("/","active") Home
+    +nav_item("/doping_athletes?name=") Doping Athletes
+block content
+  p
+    +icon-primary("search")
+    |  #{title}:
+  // Create a table with one row per result
+  form(method="get", action="/doping_athletes")
+  p
+    table
+      tr#title
+        td Name
+        td Origin Country
+        td Sport
+        td Banned Substance Athlete Used
+        td Year
+      - for (var inx = 0; inx < results.length; inx++)
+        tr
+          td=results[inx].name
+          td=results[inx].origin_country
+          td=results[inx].sport
+          td=results[inx].banned_substance
+          td=results[inx].year
+  // Put a click button that lets us return to the index page
+  form(method='get', action='/')
+      input(type='submit', value='Return')

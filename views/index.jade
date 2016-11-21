@@ -1,0 +1,14 @@
+// Inherits from layout
+extend layout
+// Then we produce a form that triggers /doping_athletes once
+// the user hits Submit
+block navbarcontent
+    +nav_item("/","active") Home
+    +nav_item("/doping_athletes?name=") Doping Athletes
+block content
+  p
+    +icon-primary("search")
+    |  #{title}:
+    form(method='get', action='/doping_athletes')
+      input(name='name', value='')
+      input(type='submit', value='Submit')
