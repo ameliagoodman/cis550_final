@@ -1,17 +1,37 @@
+body{
+    background-color: #FFFFFF;
+}
+
 .navbar {
-    background-color: pink;
+    background-color: #1D1E18;
+    border-style: none;
 }
 
 .navbar li {
     list-style: none;
     margin: auto;
-    padding: 15px;
     display: inline;
+
+}
+
+.navbar li a:hover {
+    color: #D9FFF5 !important;
+}
+
+.jumbotron {
+    background-color: #98B9F2;
+    width: 100%;
+}
+
+.footer>.container>p {
+    color: #1C5D99;
 }
 
 #title {
     font-size: 1.2em;
-    background-color: #B6B6B6;
+    width: 100%;
+    color: white;
+    background-color: #526797;
 }
 
 td {

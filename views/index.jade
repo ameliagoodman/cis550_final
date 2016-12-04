@@ -4,11 +4,18 @@ extend layout
 // the user hits Submit
 block navbarcontent
     +nav_item("/","active") Home
-    +nav_item("/doping_athletes?name=") Doping Athletes
+    +nav_item("/statistics") Statistics
+    +nav_item("/doping_athletes?name=") Doping Athletes by Country
 block content
+  h1.
+    Welcome.
+
+  p.
+    On the Statistics page, you can find interesting stats about Olympic doping scandals over the years. For a more interactive look, please begin by entering a country in the search field. You will then see all Olympic doping scandals with athletes from that country.
+
   p
     +icon-primary("search")
     |  #{title}:
     form(method='get', action='/doping_athletes')
-      input(name='name', value='')
+      input(name='name', value='', placeholder="Turkey")
       input(type='submit', value='Submit')

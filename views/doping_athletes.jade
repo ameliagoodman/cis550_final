@@ -1,9 +1,10 @@
-// Jade file to specify output of a persons list
+// Jade file to specify output of a country list
 // Inherits from layout
 extend layout
 block navbarcontent
-    +nav_item("/","active") Home
-    +nav_item("/doping_athletes?name=") Doping Athletes
+    +nav_item("/") Home
+    +nav_item("/statistics") Statistics
+    +nav_item("/doping_athletes?name=","active") Doping Athletes by Country
 block content
   p
     +icon-primary("search")

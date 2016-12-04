@@ -1,0 +1,56 @@
+// Jade file to specify output of a country list
+// Inherits from layout
+extend layout
+block navbarcontent
+    +nav_item("/") Home
+    +nav_item("/statistics","active") Statistics
+    +nav_item("/doping_athletes?name=") Doping Athletes by Country
+block content
+
+  h2
+    |  #{title}:
+
+  +tab-list(["Sport","Drug","Gender","Country"],0)
+    +tab("Sport","active")
+      // Create a table with one row per result
+      p
+        table
+          tr#title
+            td Sport
+            td Number of Incidents
+          - for (var inx = 0; inx < results['per_sport'].length; inx++)
+            tr
+              td=results['per_sport'][inx].sport
+              td=results['per_sport'][inx].number_of_incidents
+    +tab("Drug")
+      // Create a table with one row per result
+      p
+        table
+          tr#title
+            td Drug
+            td Number of Incidents
+          - for (var inx = 0; inx < results['per_drug'].length; inx++)
+            tr
+              td=results['per_drug'][inx].banned_substance
+              td=results['per_drug'][inx].number_of_incidents
+    +tab("Gender")
+      h1 Messages
+      p This is Messages tab
+    +tab("Country")
+      // Create a table with one row per result
+      p
+        table
+          tr#title
+            td Country
+            td Number of Incidents
+          - for (var inx = 0; inx < results['per_country'].length; inx++)
+            tr
+              td=results['per_country'][inx].origin_country
+              td=results['per_country'][inx].number_of_incidents
+
+
+
+
+    // Put a click button that lets us return to the index page
+  form(method='get', action='/')
+      input(type='submit', value='Return')

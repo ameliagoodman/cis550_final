@@ -3,17 +3,13 @@ append styles
     // Custom styles for this template
     link(href='/stylesheets/style.css', rel='stylesheet')
 block body
-    header
     // Static navbar
-    +navbar-static("CIS 450 Final Project","navbar")
+    +navbar("Group 6 Final Project", "dropdown_menu")
         block navbarcontent
     .container
-        // Main component for a primary marketing message or call to action
         .jumbotron
             .main-content
                 block content
-            .sidebar
-                block sidebar
     footer.footer
         .container
-            p.text-muted Running on node with Express, Jade, Bootstrap
+            p.text-muted Created by Amelia Goodman, Meriah O'Neil, and Emma Cordano

@@ -8,6 +8,7 @@
 var express = require('express')
   , routes = require('./routes')
   , doping_athletes = require('./routes/doping_athletes')
+  , statistics = require('./routes/statistics')
   , http = require('http')
   , path = require('path')
   , stylus = require("stylus")
@@ -20,8 +21,8 @@ var app = express();
 init_app(app);
 
 app.get('/', routes.do_work);
-app.get('/reference', routes.do_ref);
 app.get('/doping_athletes', doping_athletes.do_work);
+app.get('/statistics', statistics.do_work);
 
 // Listen on the port we specify
 http.createServer(app).listen(app.get('port'), function(){
@@ -41,7 +42,7 @@ function compile(str, path) {
 function init_app() {
 	// all environments
 	app.set('port', process.env.PORT || 8080);
-	
+
 	// Use Jade to do views
 	app.set('views', __dirname + '/views');
 	app.set('view engine', 'jade');
