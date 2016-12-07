@@ -3,7 +3,7 @@
 extend layout
 block navbarcontent
     +nav_item("/") Home
-    +nav_item("/statistics","active") Statistics
+    +nav_item("/statistics","active") Aggregate Statistics
     +nav_item("/doping_athletes?name=") Doping Athletes by Country
 block content
 
@@ -18,10 +18,10 @@ block content
           tr#title
             td Sport
             td Number of Incidents
-          - for (var inx = 0; inx < results['per_sport'].length; inx++)
+          - for (var inx = 0; inx < per_sport.length; inx++)
             tr
-              td=results['per_sport'][inx].sport
-              td=results['per_sport'][inx].number_of_incidents
+              td=per_sport[inx].sport
+              td=per_sport[inx].number_of_incidents
     +tab("Drug")
       // Create a table with one row per result
       p
@@ -29,13 +29,27 @@ block content
           tr#title
             td Drug
             td Number of Incidents
-          - for (var inx = 0; inx < results['per_drug'].length; inx++)
+          - for (var inx = 0; inx < per_drug.length; inx++)
             tr
-              td=results['per_drug'][inx].banned_substance
-              td=results['per_drug'][inx].number_of_incidents
+              td=per_drug[inx].banned_substance
+              td=per_drug[inx].number_of_incidents
     +tab("Gender")
-      h1 Messages
-      p This is Messages tab
+      // Create a table with one row per result
+      p
+        table
+          tr#title
+            td Sport
+            td Female Incidents
+            td Male Incidents
+          - for (var inx = 0; inx < per_sport_gender.length; inx++)
+            tr
+              td=per_sport_gender[inx].sport
+              td=per_sport_gender[inx].num_female
+              td=per_sport_gender[inx].num_male
+          tr
+            td Total
+            td=per_gender[0].num_female
+            td=per_gender[0].num_male
     +tab("Country")
       // Create a table with one row per result
       p
@@ -43,10 +57,10 @@ block content
           tr#title
             td Country
             td Number of Incidents
-          - for (var inx = 0; inx < results['per_country'].length; inx++)
+          - for (var inx = 0; inx < per_country.length; inx++)
             tr
-              td=results['per_country'][inx].origin_country
-              td=results['per_country'][inx].number_of_incidents
+              td=per_country[inx].origin_country
+              td=per_country[inx].number_of_incidents
 
 
 

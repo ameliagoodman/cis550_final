@@ -4,95 +4,41 @@ var connection = mysql.createConnection({
   host     : 'cis550project.cgregrpimppx.us-west-2.rds.amazonaws.com',
   user     : 'welovedope',
   password : 'dope420420',
-  database : 'cis550project'
+  database : 'cis550project',
+  multipleStatements: true
 });
 
-var results = {}
 
-/////
-// Query the mysql database, and return all relevant doping statistics
-//
-// res = HTTP result object sent back to the client
-function query_db(res) {
-    output_persons(res, "", results);
-}
-
-// What sport has highest number of doping incidents?
-// Returns in RowDataPacket{sport: 'sport', number_of_incidents: #}
-function per_sport() {
-    query = "SELECT sport, COUNT(*) as number_of_incidents FROM doping_athletes GROUP BY sport ORDER BY number_of_incidents DESC;";
-    connection.query(query, function(err, rows, fields) {
-        if (err) console.log(err);
-        else {
-            add_results("per_sport", rows);
-        }
-    });
-}
-
-function per_sport_female() {
-    query = "SELECT sport, COUNT(*) as number_of_incidents FROM doping_athletes WHERE gender = 'Female' GROUP BY sport ORDER BY number_of_incidents DESC;";
-    connection.query(query, function(err, rows, fields) {
-        if (err) console.log(err);
-        else {
-            add_results("per_sport_female", rows);
-        }
-    });
-
-}
-
-function per_sport_male() {
-    query = "SELECT sport, COUNT(*) as number_of_incidents FROM doping_athletes WHERE gender = 'Male' GROUP BY sport ORDER BY number_of_incidents DESC;";
-    connection.query(query, function(err, rows, fields) {
-        if (err) console.log(err);
-        else {
-            add_results("per_sport_male", rows);
-        }
-    });
-}
-
-function per_country() {
-    query = "SELECT origin_country, COUNT(*) as number_of_incidents FROM doping_athletes GROUP BY origin_country ORDER BY number_of_incidents DESC;";
-    connection.query(query, function(err, rows, fields) {
-        if (err) console.log(err);
-        else {
-            add_results("per_country", rows);
-        }
-    });
-}
-
-function per_drug() {
-    query = "SELECT banned_substance, COUNT(*) as number_of_incidents FROM doping_athletes GROUP BY banned_substance ORDER BY number_of_incidents DESC;";
-    connection.query(query, function(err, rows, fields) {
-        if (err) console.log(err);
-        else {
-            add_results("per_drug", rows);
-        }
-    });
-}
-
-// adds rows from query to result json
-function add_results(title, rows) {
-    results[title] = rows;
-}
-
-// ///
+// accumulate results for different statistics from doping incidents
 // send accumulated results to client
 // res = HTTP result object sent back to the client
-function output_results(res) {
-    res.render('statistics.jade',
-           { title: "Choose a category to order the statistics:",
-             results: results }
-      );
-}
+function load_queries(res) {
+    var per_sport = "SELECT sport, COUNT(*) as number_of_incidents FROM doping_athletes GROUP BY sport ORDER BY number_of_incidents DESC;";
+    var per_sport_gender = "SELECT sport, SUM(gender='Female') as num_female, SUM(gender='Male') as num_male FROM doping_athletes GROUP BY sport;";
+    var per_country = "SELECT origin_country, COUNT(*) as number_of_incidents FROM doping_athletes GROUP BY origin_country ORDER BY number_of_incidents DESC;";
+    var per_drug = "SELECT banned_substance, COUNT(*) as number_of_incidents FROM doping_athletes GROUP BY banned_substance ORDER BY number_of_incidents DESC;";
+    var per_year =  "SELECT year, COUNT(*) as number_of_incidents FROM doping_athletes GROUP BY year ORDER BY number_of_incidents DESC;";
+    var per_gender = "SELECT SUM(gender='Female') as num_female, SUM(gender='Male') as num_male FROM doping_athletes;";
 
+    connection.query(per_sport + per_sport_gender + per_country + per_drug
+        + per_year + per_gender, function(err, results) {
+        if (err) console.log(err);
+        else {
+            res.render('statistics.jade',
+               { title: "Choose a category to order the statistics",
+                 per_sport: results[0],
+                 per_sport_gender: results[1],
+                 per_country: results[2],
+                 per_drug: results[3],
+                 per_year: results[4],
+                 per_gender: results[5] }
+            );
+        }
+    });
+}
 
 /////
 // This is what's called by the main app
 exports.do_work = function(req, res){
-	per_sport();
-    per_sport_female();
-    per_sport_male();
-    per_country();
-    per_drug();
-    output_results(res);
+	load_queries(res);
 };
