@@ -13,12 +13,12 @@ var connection = mysql.createConnection({
 // send accumulated results to client
 // res = HTTP result object sent back to the client
 function load_queries(res) {
-    var per_sport = "SELECT sport, COUNT(*) as number_of_incidents FROM doping_athletes GROUP BY sport ORDER BY number_of_incidents DESC;";
-    var per_sport_gender = "SELECT sport, SUM(gender='Female') as num_female, SUM(gender='Male') as num_male FROM doping_athletes GROUP BY sport;";
-    var per_country = "SELECT origin_country, COUNT(*) as number_of_incidents FROM doping_athletes GROUP BY origin_country ORDER BY number_of_incidents DESC;";
-    var per_drug = "SELECT banned_substance, COUNT(*) as number_of_incidents FROM doping_athletes GROUP BY banned_substance ORDER BY number_of_incidents DESC;";
-    var per_year =  "SELECT year, COUNT(*) as number_of_incidents FROM doping_athletes GROUP BY year ORDER BY number_of_incidents DESC;";
-    var per_gender = "SELECT SUM(gender='Female') as num_female, SUM(gender='Male') as num_male FROM doping_athletes;";
+    var per_sport = "SELECT SQL_CACHE sport, COUNT(*) as number_of_incidents FROM doping_athletes GROUP BY sport ORDER BY number_of_incidents DESC;";
+    var per_sport_gender = "SELECT SQL_CACHE sport, SUM(gender='Female') as num_female, SUM(gender='Male') as num_male FROM doping_athletes GROUP BY sport;";
+    var per_country = "SELECT SQL_CACHE origin_country, COUNT(*) as number_of_incidents FROM doping_athletes GROUP BY origin_country ORDER BY number_of_incidents DESC;";
+    var per_drug = "SELECT SQL_CACHE banned_substance, COUNT(*) as number_of_incidents FROM doping_athletes GROUP BY banned_substance ORDER BY number_of_incidents DESC;";
+    var per_year =  "SELECT SQL_CACHE year, COUNT(*) as number_of_incidents FROM doping_athletes GROUP BY year ORDER BY number_of_incidents DESC;";
+    var per_gender = "SELECT SQL_CACHE SUM(gender='Female') as num_female, SUM(gender='Male') as num_male FROM doping_athletes;";
 
     connection.query(per_sport + per_sport_gender + per_country + per_drug
         + per_year + per_gender, function(err, results) {

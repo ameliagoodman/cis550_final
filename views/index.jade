@@ -17,5 +17,7 @@ block content
     +icon-primary("search")
     |  #{title}:
     form(method='get', action='/doping_athletes')
-      input(name='name', value='', placeholder="Turkey")
+      select(name = "name")
+        - for (var inx = 0; inx < countries.length; inx++)
+          option #{countries[inx].name}
       input(type='submit', value='Submit')
