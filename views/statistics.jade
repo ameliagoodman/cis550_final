@@ -11,7 +11,7 @@ block content
   h2
     |  #{title}:
 
-  +tab-list(["Sport","Drug","Gender","Country","Year","Average per Country"],0)
+  +tab-list(["Sport","Drug","Gender","Country","Year","Country_Average"],0)
     +tab("Sport","active")
       // Create a table with one row per result
       p
@@ -73,12 +73,11 @@ block content
             tr
               td=per_year[inx].year
               td=per_year[inx].number_of_incidents
-    +tab("Average per Country")
+    +tab("Country_Average")
       // Create a table with one row per result
       p
         table
           tr#title
-            td Average per Country
             td Country
             td Average Number of Incidents
           - for (var inx = 0; inx < avg_incidents.length; inx++)
