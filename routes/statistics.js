@@ -19,9 +19,10 @@ function load_queries(res) {
     var per_drug = "SELECT SQL_CACHE banned_substance, COUNT(*) as number_of_incidents FROM doping_athletes GROUP BY banned_substance ORDER BY number_of_incidents DESC;";
     var per_year =  "SELECT SQL_CACHE year, COUNT(*) as number_of_incidents FROM doping_athletes GROUP BY year ORDER BY number_of_incidents DESC;";
     var per_gender = "SELECT SQL_CACHE SUM(gender='Female') as num_female, SUM(gender='Male') as num_male FROM doping_athletes;";
+    var avg_incidents = "SELECT SQL_CACHE origin_country, AVG(sub.num_inc) AS number_of_incidents FROM (SELECT origin_country, COUNT(*) AS num_inc FROM doping_athletes GROUP BY origin_country, year) sub GROUP BY origin_country ORDER BY number_of_incidents DESC;";
 
     connection.query(per_sport + per_sport_gender + per_country + per_drug
-        + per_year + per_gender, function(err, results) {
+        + per_year + per_gender + avg_incidents, function(err, results) {
         if (err) console.log(err);
         else {
             res.render('statistics.jade',
@@ -31,7 +32,8 @@ function load_queries(res) {
                  per_country: results[2],
                  per_drug: results[3],
                  per_year: results[4],
-                 per_gender: results[5] }
+                 per_gender: results[5],
+                 avg_incidents: results[6] }
             );
         }
     });

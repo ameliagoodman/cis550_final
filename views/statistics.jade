@@ -5,6 +5,7 @@ block navbarcontent
     +nav_item("/") Home
     +nav_item("/statistics","active") Aggregate Statistics
     +nav_item("/doping_athletes?name=") Doping Athletes by Country
+    +nav_item("/doping_medalists?name=") Doping Medalists by Country
     +nav_item("/corruption") Corruption
 
 block content
@@ -12,7 +13,7 @@ block content
   h2
     |  #{title}:
 
-  +tab-list(["Sport","Drug","Gender","Country"],0)
+  +tab-list(["Sport","Drug","Gender","Country","Year","Country_Average"],0)
     +tab("Sport","active")
       // Create a table with one row per result
       p
@@ -63,8 +64,28 @@ block content
             tr
               td=per_country[inx].origin_country
               td=per_country[inx].number_of_incidents
-
-
+    +tab("Year")
+      // Create a table with one row per result
+      p
+        table
+          tr#title
+            td Year
+            td Number of Incidents
+          - for (var inx = 0; inx < per_year.length; inx++)
+            tr
+              td=per_year[inx].year
+              td=per_year[inx].number_of_incidents
+    +tab("Country_Average")
+      // Create a table with one row per result
+      p
+        table
+          tr#title
+            td Country
+            td Average Number of Incidents
+          - for (var inx = 0; inx < avg_incidents.length; inx++)
+            tr
+              td=avg_incidents[inx].origin_country
+              td=avg_incidents[inx].number_of_incidents
 
 
     // Put a click button that lets us return to the index page

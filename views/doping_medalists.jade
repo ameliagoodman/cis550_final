@@ -4,30 +4,28 @@ extend layout
 block navbarcontent
     +nav_item("/") Home
     +nav_item("/statistics") Aggregate Statistics
-    +nav_item("/doping_athletes?name=","active") Doping Athletes by Country
-    +nav_item("/doping_medalists?name=") Doping Medalists by Country
-    +nav_item("/corruption") Corruption
-
+    +nav_item("/doping_athletes?name=") Doping Athletes by Country
+    +nav_item("/doping_medalists?name=","active") Recompeted Doping Medalists
 block content
   p
     +icon-primary("search")
     |  #{title}:
   // Create a table with one row per result
-  form(method="get", action="/doping_athletes")
+  form(method="get", action="/doping_medalists")
   p
     table
       tr#title
         td Name
-        td Origin Country
+        td Olympic Game Location
         td Sport
-        td Banned Substance Athlete Used
+        td Medal received
         td Year
       - for (var inx = 0; inx < results.length; inx++)
         tr
           td=results[inx].name
-          td=results[inx].origin_country
+          td=results[inx].game_location
           td=results[inx].sport
-          td=results[inx].banned_substance
+          td=results[inx].medal
           td=results[inx].year
   // Put a click button that lets us return to the index page
   form(method='get', action='/')
