@@ -1,0 +1,36 @@
+// Jade file to specify output of a country list
+// Inherits from layout
+extend layout
+block navbarcontent
+    +nav_item("/") Home
+    +nav_item("/statistics") Aggregate Statistics
+    +nav_item("/doping_athletes?name=") Doping Athletes by Country
+    +nav_item("/corruption","active") Corruption
+block content
+  p
+    +icon-primary("search")
+    |  #{title}:
+  // Create a table with one row per result
+  form(method="get", action="/corruption")
+  p
+    table
+      tr#title
+        td Country
+        td 1995
+        td 1996
+        td 2000
+        td 2004
+        td 2008
+        td 2015
+      - each result in results
+        tr
+          td=result.country
+          - each rank in result.ranking
+            if rank == 0
+              td=""
+            else
+              td=rank
+
+  // Put a click button that lets us return to the index page
+  form(method='get', action='/')
+      input(type='submit', value='Return')

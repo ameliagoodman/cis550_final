@@ -8,6 +8,7 @@
 var express = require('express')
   , routes = require('./routes')
   , doping_athletes = require('./routes/doping_athletes')
+  , corruption = require('./routes/corruption')
   , statistics = require('./routes/statistics')
   , http = require('http')
   , path = require('path')
@@ -23,6 +24,7 @@ init_app(app);
 app.get('/', routes.do_work);
 app.get('/doping_athletes', doping_athletes.do_work);
 app.get('/statistics', statistics.do_work);
+app.get('/corruption', corruption.do_work);
 
 // Listen on the port we specify
 http.createServer(app).listen(app.get('port'), function(){
