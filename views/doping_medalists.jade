@@ -18,6 +18,8 @@ block content
     table
       tr#title
         td Name
+        td Athlete's Home Country
+        td Athlete's Home Country Code
         td Olympic Game Location
         td Sport
         td Medal received
@@ -25,6 +27,8 @@ block content
       - for (var inx = 0; inx < results.length; inx++)
         tr
           td=results[inx].name
+          td=results[inx].origin_country
+          td=results[inx].code
           td=results[inx].game_location
           td=results[inx].sport
           td=results[inx].medal
