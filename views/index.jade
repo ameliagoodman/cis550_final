@@ -48,7 +48,7 @@ block content
   p(align='center')
     +icon-primary("search")
     |  #{title}:
-    form(method='get', action='/doping_athletes')(align='center')
+    form(method='get', action='/doping_athletes', align='center')
       select(name = "name")
         - for (var inx = 0; inx < countries.length; inx++)
           option #{countries[inx].name}
