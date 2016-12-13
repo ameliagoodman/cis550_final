@@ -1,0 +1,25 @@
+script(sync='', src='https://platform.twitter.com/widgets.js')
+
+// Jade file to specify output of a country list
+// Inherits from layout
+extend layout
+
+
+block navbarcontent
+    +nav_item("/") Home
+    +nav_item("/doping_athletes?name=") Doping Athletes by Country
+    +nav_item("/statistics") Aggregate Statistics
+    +nav_item("/doping_medalists") Doping Athletes who Medalled
+    +nav_item("/corruption") Corruption Index
+    +nav_item("/twitter_feed","active") Tweets
+
+block content
+
+  h2(align='center')
+    |  #{title}
+  p
+    | Read the most recent tweets about #doping in the #Olympics.
+  a.twitter-timeline(href='https://twitter.com/search?q=%23olympics%20%23doping', data-widget-id='808512299367600128') Tweets about #olympics #doping
+  script.
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+

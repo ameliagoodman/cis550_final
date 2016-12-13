@@ -3,14 +3,15 @@
 extend layout
 block navbarcontent
     +nav_item("/") Home
-    +nav_item("/statistics","active") Aggregate Statistics
     +nav_item("/doping_athletes?name=") Doping Athletes by Country
-    +nav_item("/doping_medalists?name=") Doping Athletes with Medals from Other Games
-    +nav_item("/corruption") Corruption
+    +nav_item("/statistics","active") Aggregate Statistics
+    +nav_item("/doping_medalists") Doping Athletes who Medalled
+    +nav_item("/corruption") Corruption Index
+    +nav_item("/twitter_feed") Tweets
 
 block content
 
-  h2
+  h2(align="center")
     |  #{title}:
 
   +tab-list(["Sport","Drug","Gender","Country","Year","Country_Average"],0)
@@ -37,6 +38,25 @@ block content
               td=per_drug[inx].banned_substance
               td=per_drug[inx].number_of_incidents
     +tab("Gender")
+      script(type='text/javascript', src='https://www.gstatic.com/charts/loader.js')
+      script(type='text/javascript').
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+        ['Gender', 'Total number of Incidents'],
+        ['Female',     11],
+        ['Male',      2]
+        ]);
+        var options = {
+        title: 'Incidents by Gender'
+        };
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        chart.draw(data, options);
+        }
+      #piechart(style='width: 100%; height: 200px;')
+
+
       // Create a table with one row per result
       p
         table
@@ -87,7 +107,3 @@ block content
               td=avg_incidents[inx].origin_country
               td=avg_incidents[inx].number_of_incidents
 
-
-    // Put a click button that lets us return to the index page
-  form(method='get', action='/')
-      input(type='submit', value='Return')

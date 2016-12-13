@@ -26,7 +26,7 @@ function load_queries(res) {
         if (err) console.log(err);
         else {
             res.render('statistics.jade',
-               { title: "Choose a category to order the statistics",
+               { title: "Organize the number of doping incidents by",
                  per_sport: results[0],
                  per_sport_gender: results[1],
                  per_country: results[2],

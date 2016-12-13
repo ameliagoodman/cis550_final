@@ -11,6 +11,7 @@ var express = require('express')
   , corruption = require('./routes/corruption')
   , statistics = require('./routes/statistics')
   , doping_medalists = require('./routes/doping_medalists')
+  , twitter_feed = require('./routes/twitter_feed')
   , http = require('http')
   , path = require('path')
   , stylus = require("stylus")
@@ -27,6 +28,7 @@ app.get('/doping_athletes', doping_athletes.do_work);
 app.get('/statistics', statistics.do_work);
 app.get('/corruption', corruption.do_work);
 app.get('/doping_medalists', doping_medalists.do_work);
+app.get('/twitter_feed', twitter_feed.do_work);
 
 // Listen on the port we specify
 http.createServer(app).listen(app.get('port'), function(){
