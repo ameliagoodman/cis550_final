@@ -4,7 +4,8 @@ var connection = mysql.createConnection({
   host     : 'cis550project.cgregrpimppx.us-west-2.rds.amazonaws.com',
   user     : 'welovedope',
   password : 'dope420420',
-  database : 'cis550project'
+  database : 'cis550project',
+  multipleStatements: true
 });
 
 /////
@@ -13,9 +14,10 @@ var connection = mysql.createConnection({
 // res = HTTP result object sent back to the client
 // country = origin country of athletes to query for
 function query_db(res, country) {
-	query = "SELECT SQL_CACHE * FROM doping_athletes";
-	if (country) query = query + " WHERE origin_country='" + country + "'";
-	connection.query(query, function(err, rows, fields) {
+    query0 = "SELECT DISTINCT SQL_CACHE origin_country as name FROM doping_athletes ORDER BY name;";
+    query1 = "SELECT SQL_CACHE * FROM doping_athletes";
+	if (country) query1 = query1 + " WHERE origin_country='" + country + "'";
+	connection.query(query0 + query1, function(err, rows, fields) {
 		if (err) console.log(err);
 		else {
 			output_persons(res, country, rows);
@@ -30,10 +32,20 @@ function query_db(res, country) {
 // name = Name to query for
 // results = List object of query results
 function output_persons(res,country,results) {
-	res.render('doping_athletes.jade',
-		   { title: "Olympics with country " + country,
-		     results: results }
-	  );
+    if (country != "") {
+        res.render('doping_athletes.jade',
+           { title: "Athletes caught using performance inhancing drugs from " + country,
+             countries: results[0],
+             results: results[1] }
+      );
+    } else {
+        res.render('doping_athletes.jade',
+           { title: "Athletes caught using performance inhancing drugs from all countries",
+             countries: results[0],
+             results: results[1] }
+        );
+    }
+
 }
 
 /////

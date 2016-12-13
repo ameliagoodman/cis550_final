@@ -3,13 +3,18 @@
 extend layout
 block navbarcontent
     +nav_item("/") Home
-    +nav_item("/statistics") Aggregate Statistics
     +nav_item("/doping_athletes?name=") Doping Athletes by Country
-    +nav_item("/doping_medalists?name=") Doping Athletes with Medals from Other Games
-    +nav_item("/corruption","active") Corruption
+    +nav_item("/statistics") Aggregate Statistics
+    +nav_item("/doping_medalists") Doping Athletes who Medalled
+    +nav_item("/corruption","active") Corruption Index
+    +nav_item("/twitter_feed") Tweets
 block content
-  h2
-    |  #{title}:
+  h2(align='center')
+    |  #{title}
+  p
+    | On a scale of 0 (very clean) to 100 (very corrupt). Sourced from
+    a(href='http://www.transparency.org/cpi2015?gclid=CL-00q6j8NACFU1LDQod0n0CFg#results-table')  Transparency International
+
   // Create a table with one row per result
   +tab-list(["Overall","1995","1996","2000","2004","2008", "2015"],0)
     +tab("Overall","active")

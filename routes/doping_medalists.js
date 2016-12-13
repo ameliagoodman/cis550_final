@@ -12,13 +12,14 @@ var connection = mysql.createConnection({
 //
 // res = HTTP result object sent back to the client
 // country = origin country of athletes to query for
-function query_db(res, country) {
-	query = "SELECT SQL_CACHE m.name, da.origin_country, c.code, m.game_location, m.sport, m.medal, m.year FROM medalist m JOIN doping_athletes da ON da.name=m.name JOIN country_codes c ON da.origin_country=c.country;";
-	
+
+function query_db(res) {
+	query = "SELECT SQL_CACHE m.name, da.origin_country, c.code, m.game_location, m.sport, m.medal, m.year FROM medalist m JOIN doping_athletes da ON da.name=m.name JOIN country_codes c ON da.origin_country=c.country GROUP BY name, year;";
+
 	connection.query(query, function(err, rows, fields) {
 		if (err) console.log(err);
 		else {
-			output_persons(res, country, rows);
+			output_persons(res, rows);
 		}
 	});
 }
@@ -29,9 +30,9 @@ function query_db(res, country) {
 // res = HTTP result object sent back to the client
 // name = Name to query for
 // results = List object of query results
-function output_persons(res,country,results) {
+function output_persons(res,results) {
 	res.render('doping_medalists.jade',
-		   { title: "Olympics with country " + country,
+		   { title: "Athletes who got caught for doping in one Olympic game and medalled in another",
 		     results: results }
 	  );
 }

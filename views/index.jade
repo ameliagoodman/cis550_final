@@ -4,22 +4,51 @@ extend layout
 // the user hits Submit
 block navbarcontent
     +nav_item("/","active") Home
-    +nav_item("/statistics") Aggregate Statistics
     +nav_item("/doping_athletes?name=") Doping Athletes by Country
-    +nav_item("/doping_medalists?name=") Doping Athletes with Medals from Other Games
-    +nav_item("/corruption") Corruption
+    +nav_item("/statistics") Aggregate Statistics
+    +nav_item("/doping_medalists") Doping Athletes who Medalled
+    +nav_item("/corruption") Corruption Index
+    +nav_item("/twitter_feed") Tweets
 
 block content
   h1.
     Welcome.
 
+  h3.
+    Doping Athletes by Country
   p.
-    On the Statistics page, you can find interesting stats about Olympic doping scandals over the years. For a more interactive look, please begin by entering a country in the search field. You will then see all Olympic doping scandals with athletes from that country.
+    Choose a country you're interested in and find all recorded athletes from that country that have been caught using performance enhancing drugs in the Olympic games, and information about that incident. Or you can just go ahead to that tab to see all doping records.
 
-  p
+  h3.
+    Aggregate Statistics
+  p.
+    Here you can analyze all of the recorded doping incidents in different ways. You can see how many doping incidents have been recorded by sport, drug, gender, country, year, and average per country.
+
+  h3.
+    Doping Athletes who Medaled in Other Games
+  p.
+    If you're particularly suspicious, check here to find all medals that athletes who have been caught using performance enhancing drugs have won in other games. That is, let's say an athlete was caught doping in the 1996 Olympics. This will show you any other time this athlete has medalled in other games (since their medals would have been revoked for the 1996 games).
+
+  h3.
+    Corruption Index
+  p.
+    Here you can see how countries stack up in terms of corruption, brought to you by Transparency International.
+
+  h3.
+    Tweets
+  p.
+    See what the rest of the world is saying about #doping in the #Olympics.
+
+  br
+
+  h3(align='center')
+    | Let's get started.
+  p(align='center')
+    | Choose a country to find what athletes have been caught doping.
+  p(align='center')
     +icon-primary("search")
     |  #{title}:
-    form(method='get', action='/doping_athletes')
+    form(method='get', action='/doping_athletes')(align='center')
       select(name = "name")
         - for (var inx = 0; inx < countries.length; inx++)
           option #{countries[inx].name}
