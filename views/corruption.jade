@@ -42,73 +42,97 @@ block content
           tr#title
             td Country
             td Ranking
+            td Incidents
             - each ans in yearOne
               tr
               if ans.ranking[1995] == 0
-              else 
+              else
                 td=ans.country
                 td=ans.ranking[1995]
+                - each item in sql.year96
+                  if item.country == ans.country
+                    td=item.num
+
+
+
+
     +tab("1996")
       p
         table
           tr#title
             td Country
             td Ranking
+            td Incidents
             - each ans in yearTwo
               tr
               if ans.ranking[1996] == 0
-              else 
+              else
                 td=ans.country
                 td=ans.ranking[1996]
+                - each item in sql.year96
+                  if item.country == ans.country
+                    td=item.num
     +tab("2000")
       p
         table
           tr#title
             td Country
             td Ranking
+            td Incidents
             - each ans in yearThree
               tr
               if ans.ranking[2000] == 0
-              else 
+              else
                 td=ans.country
                 td=ans.ranking[2000]
+                - each item in sql.year00
+                  if item.country == ans.country
+                    td=item.num
     +tab("2004")
       p
         table
           tr#title
             td Country
             td Ranking
+            td Incidents
             - each ans in yearFour
               tr
               if ans.ranking[2004] == 0
-              else 
+              else
                 td=ans.country
                 td=ans.ranking[2004]
+                - each item in sql.year04
+                  if item.country == ans.country
+                    td=item.num
     +tab("2008")
       p
         table
           tr#title
             td Country
             td Ranking
+            td Incidents
             - each ans in yearFive
               tr
               if ans.ranking[2008] == 0
-              else 
+              else
                 td=ans.country
                 td=ans.ranking[2008]
+                - each item in sql.year08
+                  if item.country == ans.country
+                    td=item.num
     +tab("2015")
       p
         table
           tr#title
             td Country
             td Ranking
+            td Incidents
             - each ans in yearSix
               tr
               if ans.ranking[2015] == 0
-              else 
+              else
                 td=ans.country
                 td=ans.ranking[2015]
-
-  // Put a click button that lets us return to the index page
-  form(method='get', action='/')
-      input(type='submit', value='Return')
+                - each item in sql.year15
+                  if item.country == ans.country
+                    td=item.num

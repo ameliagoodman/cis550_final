@@ -5,7 +5,8 @@ var connection = mysql.createConnection({
   host     : 'cis550project.cgregrpimppx.us-west-2.rds.amazonaws.com',
   user     : 'welovedope',
   password : 'dope420420',
-  database : 'cis550project'
+  database : 'cis550project',
+  multipleStatements: true
 });
 AWS.config.loadFromPath('./config.json');
 
@@ -39,10 +40,12 @@ function query_db(res) {
             return -1;
           }
           if (x > y) {
-            return 1; 
+            return 1;
           }
           return 0;
         });
+        corruptionOverall = data.Items;
+
         query_1(res, data.Items);
       }
     });
@@ -61,7 +64,7 @@ function query_1(res, items1) {
             return -1;
           }
           if (x > y) {
-            return 1; 
+            return 1;
           }
           return 0;
         });
@@ -83,7 +86,7 @@ function query_2(res, items1, items2) {
             return -1;
           }
           if (x > y) {
-            return 1; 
+            return 1;
           }
           return 0;
         });
@@ -105,7 +108,7 @@ function query_3(res, items1, items2, items3) {
           return -1;
         }
         if (x > y) {
-          return 1; 
+          return 1;
         }
         return 0;
       });
@@ -128,7 +131,7 @@ function query_4(res, items1, items2, items3, items4) {
           return -1;
         }
         if (x > y) {
-          return 1; 
+          return 1;
         }
         return 0;
       });
@@ -151,7 +154,7 @@ function query_5(res, items1, items2, items3, items4, items5) {
           return -1;
         }
         if (x > y) {
-          return 1; 
+          return 1;
         }
         return 0;
       });
@@ -174,56 +177,80 @@ function query_6(res, items1, items2, items3, items4, items5, items6) {
             return -1;
           }
           if (x > y) {
-            return 1; 
+            return 1;
           }
           return 0;
         });
-       res.render('corruption.jade', {title: "Corruption Data", 
-          "results":  items1, 
+        query_sql(res,  items1, items2, items3, items4, items5, items6, data.Items);
+    }
+
+  });
+
+}
+
+function query_sql(res, items1, items2, items3, items4, items5, items6, items7) {
+  var query2009 = "SELECT origin_country, year, count(*) as num_incidents FROM doping_athletes WHERE year>2008 AND origin_country=\'";
+  var query2005 = "SELECT origin_country, year, count(*) as num_incidents FROM doping_athletes WHERE year>2004 AND year<2009 AND origin_country=\'";
+  var query2001 = "SELECT origin_country, year, count(*) as num_incidents FROM doping_athletes WHERE year>2000 AND year<2005 AND origin_country=\'";
+  var query1997 = "SELECT origin_country, year, count(*) as num_incidents FROM doping_athletes WHERE year>1995 AND year<2001 AND origin_country=\'";
+  var query1995 = "SELECT origin_country, year, count(*) as num_incidents FROM doping_athletes WHERE year>1990 AND year<1996 AND origin_country=\'";
+  var allQueries2009 = "";
+  var allQueries2005 = "";
+  var allQueries2001 = "";
+  var allQueries1997 = "";
+  var allQueries1995 = "";
+
+  for (var key in corruptionOverall) {
+    allQueries2009 += query2009 + corruptionOverall[key].country + "\'; ";
+    allQueries2005 += query2005 + corruptionOverall[key].country + "\'; ";
+    allQueries2001 += query2001 + corruptionOverall[key].country + "\'; ";
+    allQueries1997 += query1997 + corruptionOverall[key].country + "\'; ";
+    allQueries1995 += query1995 + corruptionOverall[key].country + "\'; ";
+  }
+  connection.query(allQueries2009 + allQueries2005 + allQueries2001 + allQueries1997 + allQueries1995, function(err, rows, fields) {
+    if (err) console.log(err);
+    else {
+      var years = {
+        'year15':[],
+        'year08':[],
+        'year04':[],
+        'year00':[],
+        'year96':[]
+      };
+      for(var i = 0; i < rows.length; i++) {
+        var yearToCountry = {};
+        if (rows[i][0].origin_country != null) {
+          yearToCountry['country'] = [rows[i][0].origin_country]
+          yearToCountry['num'] = rows[i][0].num_incidents;
+          var year = rows[i][0].year;
+
+
+          if (year>2008) {
+            years['year15'].push(yearToCountry);
+          } else if (year>2004 && year <2009) {
+            years['year08'].push(yearToCountry);
+          } else if (year>2000 && year<2005) {
+            years['year04'].push(yearToCountry);
+          } else if (year>1995 && year<2001) {
+            years['year00'].push(yearToCountry);
+          } else {
+            years['year96'].push(yearToCountry);
+          }
+        }
+      };
+      console.log(years);
+      res.render('corruption.jade', {title: "Corruption Data",
+          "results":  items1,
           "yearOne": items2,
           "yearTwo": items3,
           "yearThree": items4,
           "yearFour": items5,
           "yearFive": items6,
-          "yearSix": data.Items
+          "yearSix": items7,
+          "sql": years
         });
     }
-    
   });
-      
-}
-function query_sql(res, items) {
-  var dope = { country: "USA", 
-    1994: { 
-      ranking: "2",
-      doping: "5"
-    }
-  };
-  for (var key in items) {
-    console.log("\n");
-    for (var y in items[key].ranking) {
-      console.log("COUNTRY" + items[key].country + "YEAR" + y);
-      query = "SELECT origin_country FROM doping_athletes WHERE origin_country = " + items[key].country;
-      connection.query(query, function(err, rows, fields) {
-        if (rows) {
-          console.log("COUNTRY :" + rows[0]);
-        }
-      })
-      // query = "SELECT COUNT(*) as c FROM doping_athletes WHERE origin_country = " + items[key].country + " AND year = " + y;
-      // connection.query(query, function(err, rows, fields) {
-      //   if (err) console.log(err);
-      //   else {
-      //     var dope_score = null;
-      //     if(rows[0] != null) {
-      //       dope_score = rows[0].c;
-      //     } else {
-      //       dope_score = 0;
-      //     }
-      //     dope.push({country: items[key].country, y: {ranking: items[key].ranking[y], doping: dope_score}});
-      //   }
-      // });
-    }  
-  }
 }
 
 /////
