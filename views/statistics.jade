@@ -16,6 +16,33 @@ block content
 
   +tab-list(["Sport","Drug","Gender","Country","Year","Country_Average"],0)
     +tab("Sport","active")
+      //Bar chart of sports
+      #chart_div
+      script(type='text/javascript', src='https://www.gstatic.com/charts/loader.js')
+      script(type='text/javascript').
+        google.charts.load('current', {packages: ['corechart', 'bar']});
+        google.charts.setOnLoadCallback(drawBasic);
+
+        function drawBasic() {
+        var data = google.visualization.arrayToDataTable(
+
+        !{per_sport_chart}
+        );
+        var options = {
+        title: 'Number of Doping Incidents by Sport',
+        chartArea: {width: '50%'},
+        hAxis: {
+        title: 'Number of Incidents',
+        minValue: 0
+        },
+        vAxis: {
+        title: 'Sport'
+        }
+        };
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+        }
+
       // Create a table with one row per result
       p
         table
@@ -38,15 +65,15 @@ block content
               td=per_drug[inx].banned_substance
               td=per_drug[inx].number_of_incidents
     +tab("Gender")
-      script(type='text/javascript', src='https://www.gstatic.com/charts/loader.js')
+      // Pie Chart of gender
       script(type='text/javascript').
         google.charts.load('current', {'packages':['corechart']});
         google.charts.setOnLoadCallback(drawChart);
         function drawChart() {
         var data = google.visualization.arrayToDataTable([
         ['Gender', 'Total number of Incidents'],
-        ['Female',     11],
-        ['Male',      2]
+        ['Female',     #{per_gender[0].num_female}],
+        ['Male',      #{per_gender[0].num_male}]
         ]);
         var options = {
         title: 'Incidents by Gender'
@@ -85,6 +112,30 @@ block content
               td=per_country[inx].origin_country
               td=per_country[inx].number_of_incidents
     +tab("Year")
+      //Bar chart of sports
+      #year_chart_div
+      script(type='text/javascript', src='https://www.gstatic.com/charts/loader.js')
+      script(type='text/javascript').
+        google.charts.load('current', {packages: ['corechart', 'line']});
+        google.charts.setOnLoadCallback(drawBasic);
+
+        function drawBasic() {
+        var data = google.visualization.arrayToDataTable(
+
+        !{per_year_chart}
+        );
+        var options = {
+          hAxis: {
+            title: 'Year'
+          },
+          vAxis: {
+            title: 'Number of Incidents'
+          }
+        };
+        var chart = new google.visualization.LineChart(document.getElementById('year_chart_div'));
+        chart.draw(data, options);
+        }
+
       // Create a table with one row per result
       p
         table

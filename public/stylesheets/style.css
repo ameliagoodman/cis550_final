@@ -51,3 +51,7 @@ box-shadow: none !important;
     padding-left: 15% !important;
     width: 90% !important;
 }
+
+#chart_div_drugs {
+    width: 1000px !important;
+}
