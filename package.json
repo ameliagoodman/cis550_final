@@ -11,6 +11,7 @@
     "jade-bootstrap" : "*",
     "stylus": "*",
     "nib": "*",
-    "mysql" : "*"
+    "mysql" : "*",
+    "aws-sdk" : "*"
   }
 }

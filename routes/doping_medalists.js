@@ -8,7 +8,7 @@ var connection = mysql.createConnection({
 });
 
 /////
-// Query the mysql database, and return all atheltes from the country entered
+// Query the mysql database, and return all athletes from the country entered
 //
 // res = HTTP result object sent back to the client
 // country = origin country of athletes to query for
