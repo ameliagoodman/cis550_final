@@ -12,7 +12,7 @@ block content
   h2(align='center')
     |  #{title}
   p
-    | On a scale of 0 (very clean) to 100 (very corrupt). Sourced from
+    | On a scale of 0 (very corrupt) to 100 (very transparent). Sourced from
     a(href='http://www.transparency.org/cpi2015?gclid=CL-00q6j8NACFU1LDQod0n0CFg#results-table')  Transparency International
 
   // Create a table with one row per result
@@ -42,90 +42,72 @@ block content
           tr#title
             td Country
             td Ranking
-            - var inx = 5;
             - each ans in yearOne
               tr
               if ans.ranking[1995] == 0
-              else if inx == 0
               else 
                 td=ans.country
                 td=ans.ranking[1995]
-                -inx -= 1;
     +tab("1996")
       p
         table
           tr#title
             td Country
             td Ranking
-            - var inx = 5;
             - each ans in yearTwo
               tr
               if ans.ranking[1996] == 0
-              else if inx == 0
               else 
                 td=ans.country
                 td=ans.ranking[1996]
-                -inx -= 1;
     +tab("2000")
       p
         table
           tr#title
             td Country
             td Ranking
-            - var inx = 5;
             - each ans in yearThree
               tr
               if ans.ranking[2000] == 0
-              else if inx == 0
               else 
                 td=ans.country
                 td=ans.ranking[2000]
-                -inx -= 1;
     +tab("2004")
       p
         table
           tr#title
             td Country
             td Ranking
-            - var inx = 5;
             - each ans in yearFour
               tr
               if ans.ranking[2004] == 0
-              else if inx == 0
               else 
                 td=ans.country
                 td=ans.ranking[2004]
-                -inx -= 1;
     +tab("2008")
       p
         table
           tr#title
             td Country
             td Ranking
-            - var inx = 5;
             - each ans in yearFive
               tr
               if ans.ranking[2008] == 0
-              else if inx == 0
               else 
                 td=ans.country
                 td=ans.ranking[2008]
-                -inx -= 1;
     +tab("2015")
       p
         table
           tr#title
             td Country
             td Ranking
-            - var inx = 5;
             - each ans in yearSix
               tr
               if ans.ranking[2015] == 0
-              else if inx == 0
               else 
                 td=ans.country
                 td=ans.ranking[2015]
-                -inx -= 1;
 
   // Put a click button that lets us return to the index page
   form(method='get', action='/')
