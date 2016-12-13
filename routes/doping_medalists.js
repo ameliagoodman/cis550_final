@@ -13,7 +13,7 @@ var connection = mysql.createConnection({
 // res = HTTP result object sent back to the client
 // country = origin country of athletes to query for
 function query_db(res, country) {
-	query = "SELECT SQL_CACHE m.name, m.game_location, m.sport, m.medal, m.year FROM medalist m JOIN doping_athletes da ON da.name=m.name;";
+	query = "SELECT SQL_CACHE m.name, da.origin_country, c.code, m.game_location, m.sport, m.medal, m.year FROM medalist m JOIN doping_athletes da ON da.name=m.name JOIN country_codes c ON da.origin_country=c.country;";
 	
 	connection.query(query, function(err, rows, fields) {
 		if (err) console.log(err);
