@@ -1,0 +1,48 @@
+1896,Athens
+1900,Paris
+1904,St. Louis
+1906,Athens
+1908,London
+1912,Stockholm
+1920,Antwerp
+1924,Chamonix
+1924,Paris
+1928,St. Moritz
+1928,Amsterdam
+1932,Lake Placid
+1932,Los Angeles
+1936,Garmisch-Partenkirchen
+1936,Berlin
+1948,St. Moritz
+1948,London
+1952,Oslo
+1952,Helsinki
+1956,Cortina d'Ampezzo
+1956,Melbourne
+1960,Squaw Valley
+1960,Rome
+1964,Innsbruck
+1964,Tokyo
+1968,Grenoble
+1968,Mexico City
+1972,Sapporo
+1972,Munich
+1976,Innsbruck
+1976,Montreal
+1980,Lake Placid
+1980,Moscow
+1984,Sarajevo
+1984,Los Angeles
+1988,Calgary
+1988,Seoul
+1992,Albertville
+1992,Barcelona
+1994,Lillehammer
+1996,Atlanta
+1998,Nagano
+2000,Sydney
+2002,Salt Lake City
+2004,Athens
+2006,Turin
+2008,Beijing
+2010,Vancouver

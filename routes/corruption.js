@@ -238,7 +238,6 @@ function query_sql(res, items1, items2, items3, items4, items5, items6, items7) 
           }
         }
       };
-      console.log(years);
       res.render('corruption.jade', {title: "Corruption Data",
           "results":  items1,
           "yearOne": items2,
